@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-url_home = 'https://www.pagina12.com.ar/'
+url_home = 'https://www.pagina12.com.ar'
 
 def get_links_from_sections(content):
     s=BeautifulSoup(content.text, 'lxml')
@@ -20,11 +20,10 @@ def get_sections_from_home(content):
 def main():
     p12 = requests.get(url_home)
     links_secciones =  get_sections_from_home(p12)
-
+    article_links=[]
     print('--------------------------------------\n')
     for link_temp in links_secciones:
         temp_content=requests.get(link_temp)
-        article_links=[]
         article_links= article_links+ get_links_from_sections(temp_content)
 
         print(article_links)    
